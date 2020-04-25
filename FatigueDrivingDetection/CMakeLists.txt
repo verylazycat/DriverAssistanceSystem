@@ -1,0 +1,36 @@
+#SET CMAKE VERSION
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+# 优化
+# SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O2")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Ofast")
+#SET PROJECT NAME
+SET(PROJECT_NAME FatigueDrivingDetection)
+#BUILD PROJECT NAME
+PROJECT(${PROJECT_NAME})
+#FIND OPENCV 
+FIND_PACKAGE(OpenCV REQUIRED)
+INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
+#FIND DLIB
+FIND_PACKAGE(dlib REQUIRED)
+INCLUDE_DIRECTORIES(${dlib_INCLUDE_DIRS})
+#PRINT STATUS
+MESSAGE(STATUS "Project: ${PROJECT_NAME}")
+MESSAGE(STATUS "------------------------------------------------------")
+MESSAGE(STATUS "OpenCV library status:")
+MESSAGE(STATUS "version: ${OpenCV_VERSION}")
+MESSAGE(STATUS "libraries: ${OpenCV_LIBS}")
+MESSAGE(STATUS "include path: ${OpenCV_INCLUDE_DIRS}")
+MESSAGE(STATUS "------------------------------------------------------")
+MESSAGE(STATUS "DLIB library status:")
+MESSAGE(STATUS "version: ${dlib_VERSION}")
+MESSAGE(STATUS "libraries: ${dlib_LIBS}")
+MESSAGE(STATUS "include path: ${dlib_INCLUDE_DIRS}")
+MESSAGE(STATUS "------------------------------------------------------")
+#GET CODE FROM SRC FOLDER
+AUX_SOURCE_DIRECTORY(src DIR_SRCS)
+include_directories(include)
+MESSAGE(STATUS "Src file: ${DIR_SRCS}")
+#编译可执行程序
+ADD_EXECUTABLE(${PROJECT_NAME} ${DIR_SRCS})
+#添加链接库
+TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${OpenCV_LIBS} ${dlib_LIBRARIES})
