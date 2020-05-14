@@ -162,7 +162,7 @@ std::vector<cv::Point> LaneDetector::regression(std::vector<std::vector<cv::Vec4
 	std::vector<cv::Point> right_pts;
 	std::vector<cv::Point> left_pts;
 
-	// If right lines are being detected, fit a line using all the init and final points of the lines
+	// 检测到右侧线，则把点给连上
 	if (right_flag == true) {
 		for (auto i : left_right_lines[0]) {
 			ini = cv::Point(i[0], i[1]);
@@ -173,14 +173,14 @@ std::vector<cv::Point> LaneDetector::regression(std::vector<std::vector<cv::Vec4
 		}
 
 		if (right_pts.size() > 0) {
-			// The right line is formed here
+			//拟合
 			cv::fitLine(right_pts, right_line, CV_DIST_L2, 0, 0.01, 0.01);
 			right_m = right_line[1] / right_line[0];
 			right_b = cv::Point(right_line[2], right_line[3]);
 		}
 	}
 
-	// If left lines are being detected, fit a line using all the init and final points of the lines
+	// 检测到左侧线，则把点给连上
 	if (left_flag == true) {
 		for (auto j : left_right_lines[1]) {
 			ini2 = cv::Point(j[0], j[1]);
@@ -191,14 +191,14 @@ std::vector<cv::Point> LaneDetector::regression(std::vector<std::vector<cv::Vec4
 		}
 
 		if (left_pts.size() > 0) {
-			// The left line is formed here
+			//拟合
 			cv::fitLine(left_pts, left_line, CV_DIST_L2, 0, 0.01, 0.01);
 			left_m = left_line[1] / left_line[0];
 			left_b = cv::Point(left_line[2], left_line[3]);
 		}
 	}
 
-	// One the slope and offset points have been obtained, apply the line equation to obtain the line points
+	// 通过直线方程获得点
 	int ini_y = inputImage.rows;
 	int fin_y = 470;
 
@@ -222,10 +222,10 @@ std::string LaneDetector::predictTurn() {
 	double vanish_x;
 	double thr_vp = 10;
 
-	// The vanishing point is the point where both lane boundary lines intersect
+	//消失点:两直线交点
 	vanish_x = static_cast<double>(((right_m*right_b.x) - (left_m*left_b.x) - right_b.y + left_b.y) / (right_m - left_m));
 
-	// The vanishing points location determines where is the road turning
+	//决策
 	if (vanish_x < (img_center - thr_vp))
 		output = "Left Turn";
 	else if (vanish_x >(img_center + thr_vp))
@@ -240,7 +240,7 @@ int LaneDetector::plotLane(cv::Mat inputImage, std::vector<cv::Point> lane, std:
 	std::vector<cv::Point> poly_points;
 	cv::Mat output;
 
-	// Create the transparent polygon for a better visualization of the lane
+	//渲染内部
 	inputImage.copyTo(output);
 	poly_points.push_back(lane[2]);
 	poly_points.push_back(lane[0]);
@@ -249,14 +249,13 @@ int LaneDetector::plotLane(cv::Mat inputImage, std::vector<cv::Point> lane, std:
 	cv::fillConvexPoly(output, poly_points, cv::Scalar(0, 0, 255), CV_AA, 0);
 	cv::addWeighted(output, 0.3, inputImage, 1.0 - 0.3, 0, inputImage);
 
-	// Plot both lines of the lane boundary
+	//划线
 	cv::line(inputImage, lane[0], lane[1], cv::Scalar(0, 255, 255), 5, CV_AA);
 	cv::line(inputImage, lane[2], lane[3], cv::Scalar(0, 255, 255), 5, CV_AA);
 
-	// Plot the turn message
+	// 决策信息
 	cv::putText(inputImage, turn, cv::Point(50, 90), cv::FONT_HERSHEY_COMPLEX_SMALL, 3, cvScalar(0, 255, 0), 1, CV_AA);
 
-	// Show the final output image
 	cv::namedWindow("Lane", CV_WINDOW_AUTOSIZE);
 	cv::imshow("Lane", inputImage);
 	return 0;

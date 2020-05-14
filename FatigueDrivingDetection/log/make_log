@@ -1,0 +1,4 @@
+Scanning dependencies of target FatigueDrivingDetection
+[ 50%] Building CXX object CMakeFiles/FatigueDrivingDetection.dir/src/main.cpp.o
+[100%] Linking CXX executable FatigueDrivingDetection
+[100%] Built target FatigueDrivingDetection

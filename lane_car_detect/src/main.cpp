@@ -12,7 +12,10 @@
 #include <stdio.h>
 #include <error.h>
 
+// 摄像头调用
 // #define __USE__CAP_0__
+
+//视频测试
 #define __USE__VIDEO__
 
 int main(int argc ,char *argv[]) 
@@ -74,6 +77,8 @@ int main(int argc ,char *argv[])
 			lane = lanedetector.regression(left_right_lines, frame);
 			//消失点预测方向
 			turn = lanedetector.predictTurn();
+			//航向输出
+			cout<<turn<<endl;
 			//渲染
 			flag_plot = lanedetector.plotLane(frame, lane, turn);
 			cv::waitKey(25);
