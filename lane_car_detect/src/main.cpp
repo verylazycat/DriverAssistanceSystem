@@ -4,7 +4,6 @@
  * @Last Modified by: verylazycat
  * @Last Modified time: 2020-04-18 13:12:06
  */
-
 #include "yolo_car_detect.h"
 #include "lane_detect.h"
 #include <iostream>
@@ -57,8 +56,8 @@ int main(int argc ,char *argv[])
 		postprocess(frame, outs);
 		//time
         vector<double> layersTimes;
-        double freq = getTickFrequency() / 1000;
-        double t = net.getPerfProfile(layersTimes) / freq;
+        double f = getTickFrequency() / 1000;
+        double t = net.getPerfProfile(layersTimes) / f;
         string label = format("Inference time for a frame : %.2f ms", t);
         putText(frame, label, Point(0, 15), FONT_HERSHEY_SIMPLEX, 0.5, Scalar(0, 0, 255));
 		// 降噪

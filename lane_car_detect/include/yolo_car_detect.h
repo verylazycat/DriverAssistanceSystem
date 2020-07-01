@@ -10,6 +10,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+
 using namespace cv;
 using namespace dnn;
 using namespace std;
@@ -17,8 +18,9 @@ using namespace std;
 //置信度
 float confThreshold = 0.5;
 float nmsThreshold = 0.4;
+
 //图片输入尺寸
-//参看cfg文件
+//参看cfg配置文件
 int inpWidth = 416;  
 int inpHeight = 416; 
 //配置文件

@@ -58,7 +58,6 @@ cv::Mat LaneDetector::edgeDetector(cv::Mat img_noise) {
 	cv::threshold(output, output, 140, 255, cv::THRESH_BINARY);
 
     // 偏离警告
-    // 参考：https://in.mathworks.com/help/vision/examples/lane-departure-warning-system-1.html#d120e8693
 	anchor = cv::Point(-1, -1);
 	kernel = cv::Mat(1, 3, CV_32F);
 	kernel.at<float>(0, 0) = -1;
@@ -236,7 +235,8 @@ std::string LaneDetector::predictTurn() {
 	return output;
 }
 
-int LaneDetector::plotLane(cv::Mat inputImage, std::vector<cv::Point> lane, std::string turn) {
+int LaneDetector::plotLane(cv::Mat inputImage, std::vector<cv::Point> lane, std::string turn) 
+{
 	std::vector<cv::Point> poly_points;
 	cv::Mat output;
 
