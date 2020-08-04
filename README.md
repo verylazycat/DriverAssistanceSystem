@@ -2,93 +2,89 @@
 
 # DriverAssistanceSystem
 
-> 仅用于学习,测试使用.
+> Only for learning and testing
 
 ## FatigueDrivingDetection
 
-### 子功能
+### Subfunction
 
-- ⻋道线检测(对行驶时保持⻋道提供支持,借助一个摄像头识别行驶⻋道的标志线);
-- 偏移警告;
-- 路况⻋辆状况检测;
+- Track line detection (support for keeping track while driving, and use a camera to identify the marking line of the driving track);
+- Offset warning;
+- Road condition and vehicle condition detection;
 
 ## lane_car_detect
 
-### 子功能
+### Subfunction
 
-- 无人驾驶预警;
-- 疲劳驾驶预警;
+- Unmanned early warning;
+- Fatigue driving warning;
 
-# 应用场景
+# Application scenario
 
-应用于 `高速路 `时间驾驶的⻋辆,适用于⻓途客出租⻋等等;
+It is applied to the vehicles that are driven in time on the highway, suitable for long-distance passenger rental, etc.;
+## the reason
 
-## 原因
+1.Road complexity is low, reducing the difficulty of keeping track (less interference with recognition);
+2. The road is longer and the driver is prone to fatigue;
+# Technical solutions
 
-1. 道路复杂度低,降低⻋道保持难度(对识别的干扰较少);
-2. 路途较⻓,驾驶人员容易疲劳;
+## Current development progress
 
-# 技术方案
+1.Each module is independent of each other (the subsequent integration is required);
+2. `The parking module has not been developed yet (for economic and technical reasons, this module needs to use slam technology);`
+3. Track maintenance and behavior detection development have been completed;
+4. Meet low computing requirements;
+5. Simulation test (not completed);
 
-## 当前开发进度状况
+## System integration scheme
 
-1. 各模块相互独立(后续需要整合);
-2. `泊⻋模块暂未开发(涉及经济和技术原因,此模块需要使用 slam 技术);`
-3. ⻋道保持和行为检测开发已完成;
-4. 满足低运算要求;
-5. 仿真测试(未完成);
+Use ROS (Robot Operating System) to integrate all functional modules, based on the Linux platform, across multiple languages (c/c++/python), to solve communication problems between different languages, and to introduce the concept of computational graphs, when all processes and their data Processing will be expressed through a point-to-point network. Each functional module provides a service, and users subscribe to these services through ROS Master, and the communication between services can be coordinated, managed and analyzed by ROS Master.
 
-## 系统整合方案
+> Still learning, I will integrate again later...
 
-使用 ROS (机器人操作系统)去整合所有功能模块,基于 Linux 平台,跨多语言(c/c++/python)实现,解决不同语言间通讯问题,引入 计算图 概念,当所有进程以及他们所进行的数据处理,将会通过一种点对点的网络形式表现出来。各个功能模块提供一个服务,用戶通过 ROS Master 去 订阅 这些服务,且服务之间的通讯可由 ROS Master协调管理解析。
+[Official website](https://www.ros.org)
 
-> 还在学习中,以后有空再整合...
-
-[官网](https://www.ros.org)
-
-# ⻋道线&⻋况识别总体流程图
-
+# Overall flow chart of track line & condition recognition
 ![http://www.imod.top/img/detect.png](http://www.imod.top/img/detect.png)
 
-对输入的每一帧图像主要有如下处理：
+The main processing for each frame of input image is as follows:
 
-1.车道线识别： 
+1.Lane line recognition:： 
 
-- 降噪 
-- 边缘检测
-- ROI处理 
-- 霍夫线获取 
-- 路线获取 
-- 渲染
+- Noise reduction: 
+- Edge detection
+- ROI processing 
+- Hough line acquisition 
+- Route acquisition 
+- Rendering
 
-2.车况识别： 
+2.Vehicle condition recognition： 
 
-- 加载yolo网络 
-- 前向传播 
-- 渲染
+- Load yolo network 
+- Forward propagation 
+- Rendering
 
-# 驾驶员行为及状态检测总体流程
+# The overall process of driver behavior and state detection
 
 ![http://www.imod.top/img/%E9%A9%BE%E9%A9%B6%E5%91%98%E8%A1%8C%E4%B8%BA%E5%8F%8A%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B.png](http://www.imod.top/img/%E9%A9%BE%E9%A9%B6%E5%91%98%E8%A1%8C%E4%B8%BA%E5%8F%8A%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B.png)
 
-关键操作有如下：
+The key operations are as follows：
 
-1.保存驾驶人员启动程序时的状态数据
+1.Save the status data when the driver starts the program
 
-2.判断是否无人驾驶
+2.Judge whether driverless
 
-3.依据记录的状态数据判断当前技术人员状态是否异常
+3.Determine whether the current technician status is abnormal based on the recorded status data
 
-# 车道线识别主要操作
+# Main operations of lane line recognition
 
 ![http://www.imod.top/img/%E8%BD%A6%E9%81%93%E7%BA%BF%E5%A4%84%E7%90%86.png](http://www.imod.top/img/%E8%BD%A6%E9%81%93%E7%BA%BF%E5%A4%84%E7%90%86.png)
 
-# 方向判断逻辑
+# Direction judgment logic
 
-![方向判断](http://www.imod.top/img/方向判断.png)
+![Direction judgment](http://www.imod.top/img/方向判断.png)
 
-获得道路线后，即我们获取了两个方程:
-
+After obtaining the road line, we have obtained two equations:
 
 $$
 y_{1}=a_{1}x_{1}+b_{1}\\
@@ -96,52 +92,51 @@ y_{2}=a_{2}x_{2}+b_{2}
 $$
 
 
-计算两直线交点(x0,y0),即上图所提的消失点； 此外，我们已知图像水平方向中心直线：x；
+Calculate the intersection point (x0, y0) of the two lines, which is the vanishing point mentioned in the figure above; In addition, we know the horizontal center line of the image: x;
 
-由此，我们有如下判断依据：
+Therefore, we have the following judgment basis:
 
-- x0 > x + thr_vp :右转
-- x0 < x - thr_vp:左转
-- x0 >= (x - thr_vp) && x0 <= (x + thr_vp)：直线
+- x0 > x + thr_vp :Turn right
+- x0 < x - thr_vp:Turn left
+- x0 >= (x - thr_vp) && x0 <= (x + thr_vp)：straight line
 
-> 注：thr_vp为调整参数，根据实际情况调试
+> Note: thr_vp is an adjustment parameter, debug according to actual situation
 
-![测试](http://www.imod.top/img/测试.png)
+![test](http://www.imod.top/img/测试.png)
 
-# 车况识别
+# Vehicle condition recognition
 
-基于深度学习的目标检测与识别算法大致分为以下三大类:
+Target detection and recognition algorithms based on deep learning are roughly divided into the following three categories:
 
-1.基于区域建议的目标检测与识别算法，如R-CNN, Fast-R-CNN, Faster-R-CNN;
+1. Target detection and recognition algorithms based on region recommendations, such as R-CNN, Fast-R-CNN, Faster-R-CNN;
 
- 2.基于回归的目标检测与识别算法，如YOLO, SSD;
+  2. Target detection and recognition algorithms based on regression, such as YOLO, SSD;
 
- 3.基于搜索的目标检测与识别算法，如基于视觉注意的AttentionNet；
+  3. Search-based target detection and recognition algorithms, such as AttentionNet based on visual attention;
 
-此处识别采用YOLO算法,其优点如下：
+The YOLO algorithm is used for identification here, and its advantages are as follows:
 
-1.速度非常快。在Titan X GPU上的速度是45 fps，加速版的YOLO差不多是150fps；
+1. Very fast. The speed on Titan X GPU is 45 fps, and the accelerated version of YOLO is almost 150 fps;
 
-2.YOLO是基于图像的全局信息进行预测的； 
+2. YOLO predicts based on the global information of the image;
 
-3.泛化能力强； 
+3. Strong generalization ability;
+4.High accuracy；
 
-4.准确率高；
+- Specific algorithm reference yolo paper
+- Training reference[DarkNet](https://pjreddie.com/darknet/yolo/)
 
-- 具体算法参考yolo论文
-- 训练参考[DarkNet](https://pjreddie.com/darknet/yolo/)
-
-> 注：由于笔记本计算能力有限，此处采用开源coco数据集训练的yolo模型，支持80个分类识别，具体分类参考配置文件
+> Note: Due to the limited computing power of the notebook, the yolo model trained on the open source coco data set is used here to support 80 classifications and identifications. Refer to the configuration file for specific classifications.
 
 ![preview](https://pic3.zhimg.com/v2-ee4db90336d60d251d7254f9918c3a48_r.jpg)
 
-# 状态特征判断依据
+# Judgment basis for state characteristics
 
-有如下内容需要了解:
+You need to know the following:
 
-1.“眼睛纵横比”（EAR） 我们可以应用面部标志检测来定位脸部的重要区域，包括眼睛，眉毛，鼻子，耳朵和嘴巴
+1. "Eye Aspect Ratio" (EAR) We can apply facial landmark detection to locate important areas of the face, including eyes, eyebrows, nose, ears and mouth
 
-2.EAR计算公式 :
+2.EAR calculation formula:
 
 
 $$
@@ -151,96 +146,89 @@ $$
 
 ![eyeEar](http://www.imod.top/img/eyeEar.png)
 
-> 详细内容参考Soukupová和Čech在其2016年的论文Real-Time Eye Blink Detection using Facial Landmarks
+> For details, please refer to Soukupová and Čech's 2016 paper Real-Time Eye Blink Detection using Facial Landmarks
 
-## Landmark算法
+## Landmark algorithm
 
-landmark是一种人脸部特征点提取的技术,Dlib库中为人脸68点标记,在《调用Dlib库进行人脸关键点标记》一文中有效果和标定点序号的示意图。今后可采用landmark中的点提取眼睛区域、嘴巴区 域用于疲劳检测,提取鼻子等部分可用于3D姿态估计。 Dlib库使用《One Millisecond Face Alignment with an Ensemble of Regression Trees》CVPR2014 中提及的算法:ERT(ensemble of regression trees)级联回归,即基于梯度提高学习的回归树方法。 该算法使用级联回归因子,首先需要使用一系列标定好的人脸图片作为训练集,然后会生成一个模型。 使用基于特征选择的相关性方法把目标输出投影到一个随机方向w上,并且选择一对特征(u,v),使 得Ii(u )-Ii(v )与被投影的目标wTri在训练数据上拥有最高的样本相关性。 当获得一张图片后,算法会生成一个initial shape就是首先估计一个大致的特征点位置,然后采用 gradient boosting算法减小initial shape 和 ground truth 的平方误差总和。用最小二乘法来最小化误 差,得到每一级的级联回归因子。核心公式如下:
-
+Landmark is a technology for extracting facial feature points. The Dlib library has 68 points for the face mark. In the article "Calling Dlib Library for Face Key Point Marking", there is a schematic diagram of the effect and the calibration point number. In the future, the points in the landmark can be used to extract the eye area and the mouth area for fatigue detection, and the nose and other parts can be used for 3D pose estimation. The Dlib library uses the algorithm mentioned in "One Millisecond Face Alignment with an Ensemble of Regression Trees" CVPR2014: ERT (ensemble of regression trees) cascade regression, which is a regression tree method based on gradient enhancement learning. The algorithm uses cascading regression factors. First, it needs to use a series of calibrated face images as the training set, and then it will generate a model. Use the correlation method based on feature selection to project the target output into a random direction w, and select a pair of features (u, v) so that Ii(u)-Ii(v) and the projected target wTri are on the training data Has the highest sample correlation. When a picture is obtained, the algorithm will generate an initial shape, which is to first estimate a rough feature point position, and then use the gradient boosting algorithm to reduce the sum of the square error of the initial shape and ground truth. Use the least square method to minimize the error, and get the cascaded regression factor for each level. The core formula is as follows:
 $$
 \hat{S}^{t+1}=\hat{S}+r_{t}(I,\hat{t}^{t})
 $$
 
+Shows the current level of regressor. The input parameters of the regressor are image I and the updated shape of the previous regressor, and the features used can be gray values or other. Each regressor is composed of many trees, and the parameters of each tree are trained according to the coordinate difference between current shape and ground truth and randomly selected pixel pairs.
 
- 示当前级的回归器regressor。回归器的输入参数为图像I和上一级回归器更新后的shape,采用的特征可 以是灰度值或者其它。每个回归器由很多棵树(tree)组成,每棵树参数是根据current shape和ground truth的坐标差和随机挑选的像素对训练得到的。
+Unlike LBF, ERT directly stores the updated value ΔS of shape in the leaf node leaf node during the process of learning Tree. The initial position S is after passing all the learned trees, and the meanshape adds all the leaf nodes that have passed. ΔS, the final position of the key points of the face can be obtained.
 
-与LBF不同,ERT是在学习Tree的过程中,直接将shape的更新值ΔS存入叶子结点leaf node.初始位 置S在通过所有学习到的Tree后,meanshape加上所有经过的叶子结点的ΔS,即可得到最终的人脸关 键点位置。
+# EAR reference meaning
+"Eye Aspect Ratio" (EAR): We can apply facial landmark detection to locate important areas of the face, including eyes, eyebrows, nose, ears and mouth.
 
-# EAR参考意义
-
-眼睛纵横比”(EAR):我们可以应用面部标志检测来定位脸部的重要区域,包括眼睛,眉毛,鼻子, 耳朵和嘴巴.
-
-1.其中p1…p6是2D面部地标位置; 2.方程的分子是计算垂直眼睛标志之间的距离，而分母是计算水平眼睛标志之间的距离，因为只有一组水平点，但是有两组垂直点，所以进行加权分母
-
+1. Where p1...p6 are the 2D facial landmark positions; 2. The numerator of the equation is to calculate the distance between vertical eye signs, and the denominator is to calculate the distance between horizontal eye signs, because there is only one set of horizontal points, but there are two sets Vertical point, so weighted denominator
 ![EAR](http://www.imod.top/img/EAR.png)
 
-> 当人眼闭眼时，EAR急剧减小，我们利用这一点去检测人眼闭眼状态
-
+> When the human eyes are closed, the EAR decreases sharply. We use this to detect the state of human eyes closed.
 ![EARTEST](http://www.imod.top/img/EARTEST.png)
 
-# 畸变矫正
+# Distortion correction
 
-在开启摄像头后第一件事先做 畸变矫正 (目前还没添加)。
-使用 opencv 提供的方法通过 棋盘格图片组 计算相机 校正矩阵 (camera calibration matrix)和 失真系数
-(distortion coefficients)。
-相应的推到,参考此篇[博客](https://blog.csdn.net/qq_36342854/article/details/88933308)
+After turning on the camera, the first thing to do beforehand distortion correction (not added yet).
+Use the method provided by opencv to calculate the camera calibration matrix and distortion coefficient through the checkerboard picture group
+(distortion coefficients).
+Correspondingly, please refer to this article [blog](https://blog.csdn.net/qq_36342854/article/details/88933308)
 
-# 提升道路线识别准确度
+# Improve the accuracy of road line recognition
 
-当前识别道路下用的是传统数字图像处理技术,虽然计算量较小,不过其 泛化性 很差,抗干扰能力差,具体
-缺陷 如下:
-第一,视觉系统对背景光线很敏感,诸如阳光强烈的林荫道,⻋道线被光线分割成碎片,致使无法
-提取出⻋道线。
-第二,视觉系统需要⻋道线的标识完整,有些年久失修的道路,⻋道线标记不明显,不完整,有些
-刚开通几年的道路也是如此。
-第三,视觉系统需要⻋道线的格式统一,这对按照模型库识别⻋道线的系统尤其重要,有些⻋道线
-格式很奇特,比如蓝颜色的⻋道线,很窄的⻋道线,模型库必须走遍全国将这些奇特的⻋道线一一
-收录,才能保证顺利检测。
-第四,视觉系统无法对应低照度环境,尤其是没有路灯的黑夜。一般LKW(Lane keep assistance)要
-求时速在72公里以上才启动,原因之一是速度比较高时人不会轻易换道,另一个原因就是比较低
-的⻋速意味着视觉系统的取样点不足,拟合的⻋道线准确度较低。
-第五,如果⻋道线表面被水覆盖,视觉系统会完全无效。
-具体解决方案如下:
-1. 基于激光雷达回波宽度;
-2. 基于激光雷达反射强度信息形成的灰度图,或者根据强度信息与高程信息配合,过滤出无效信息;
-3. 激光雷达SLAM与高精度地图配合,不仅检测⻋道线还进行自⻋定位;
-4. 利用激光雷达能够获取路沿高度信息或物理反射信息不同的特性,先检测出路沿,因为道路宽度是
-已知,根据距离再推算出⻋道线位置。对于某些路沿与路面高度相差低于3厘米的道路,这种方法
-无法使用。
-后三种方法需要多线激光雷达,最少也是16线激光雷达。前者可以使用4线或单线激光雷达;
+Currently, the traditional digital image processing technology is used to identify the road. Although the amount of calculation is small, its generalization is very poor and its anti-interference ability is poor.
+The defects are as follows:
+First, the visual system is very sensitive to background light, such as a tree-lined road with strong sunlight. The line of the road is divided into pieces by the light, making it impossible to
+Extract the track line.
+Second, the visual system requires complete road markings. For some roads that have been in disrepair for a long time, the road markings are not obvious and incomplete, and some
+The same is true for the road that has just been opened for a few years.
+Third, the vision system needs to have a unified format of track lines, which is especially important for systems that identify track lines according to the model library. Some track lines
+The format is very peculiar, such as blue track lines and very narrow track lines. The model library must travel all over the country to integrate these peculiar tracks one by one.
+Included can ensure smooth detection.
+Fourth, the vision system cannot correspond to low-light environments, especially in the dark night without street lights. Generally LKW (Lane keep assistance) requires
+It is necessary to start at a speed above 72 kilometers per hour. One reason is that people will not easily change lanes when the speed is relatively high. Another reason is that it is relatively low.
+The high speed means that the sampling points of the vision system are insufficient, and the accuracy of the fitted track is low.
+Fifth, if the surface of the track is covered by water, the visual system will be completely ineffective.
+The specific solutions are as follows:
+1. Based on the laser radar echo width;
+2. A grayscale image formed based on the reflected intensity information of the lidar, or the combination of intensity information and elevation information to filter out invalid information;
+3. Lidar SLAM works with high-precision maps to not only detect track lines but also perform self-positioning;
+4. Use lidar to obtain different characteristics of road edge height information or physical reflection information, and detect the road edge first, because the road width is
+It is known that the position of the track line is calculated based on the distance. For some roads with a difference of less than 3 cm between the road edge and the road, this method
+Not available.
+The latter three methods require multi-line lidar, and at least 16-line lidar. The former can use 4-line or single-line lidar;
 
-# 性能提升
+# Performance improvement
 
-- 提升硬件性能,扩大内存,使用高性能GPU;
-- 使用TensorRt框架
+-Improve hardware performance, expand memory, and use high-performance GPU;
+-Use TensorRt framework
 
->TensorRT是一个高性能的深度学习推理(Inference)优化器,可以为深度学习应用提供低
->延迟、高吞吐率的部署推理。TensorRT可用于对超大规模数据中心、嵌入式平台或自动驾驶
->平台进行推理加速。TensorRT现已能支持TensorFlow、Caffe、Mxnet、Pytorch等几乎所
->有的深度学习框架,将TensorRT和NVIDIA的GPU结合起来,能在几乎所有的框架中进行快
->速和高效的部署推理
+>TensorRT is a high-performance deep learning inference optimizer that can provide low
+>Delay and high throughput deployment reasoning. TensorRT can be used for super large-scale data centers, embedded platforms or autonomous driving
+>The platform performs inference acceleration. TensorRT can now support almost all TensorFlow, Caffe, Mxnet, Pytorch, etc.
+> Some deep learning frameworks combine TensorRT and NVIDIA GPUs, which can perform fast in almost all frameworks.
+>Quick and efficient deployment reasoning
+# Import map concept
 
-# 导入地图概念
+> Not implemented
 
-> 未实现
+Under the condition of lidar, apply slam technology to build a space map
 
-在有激光雷达的条件下,应用 slam 技术,建立空间地图
+# Installation configuration
 
-# 安装配置
+-ROS
 
-- ROS
-
-> 目前没使用,可不安装
-
+> Currently not used, do not install
 - opencv
 
 > version:3.4.5
 
 - Dlib
 
-> 用于实现检测驾驶员疲劳
+> Used to detect driver fatigue
 
-- 编译程序
+-Compile the program
 
 ```bash
 cd FatigueDrivingDetection
@@ -262,4 +250,4 @@ chmod +x lane_car_detect
 ./lane_car_detect
 ```
 
-参考[博客](http://www.imod.top/_posts/2020-07-01-%E8%BD%A6%E9%81%93%E4%BF%9D%E6%8C%81&%E7%96%B2%E5%8A%B3%E9%A9%BE%E9%A9%B6%E6%A3%80%E6%B5%8B/)
+Reference [blog](http://www.imod.top/_posts/2020-07-01-%E8%BD%A6%E9%81%93%E4%BF%9D%E6%8C%81&%E7%96%B2%E5%8A%B3%E9%A9%BE%E9%A9%B6%E6%A3%80%E6%B5%8B/)
