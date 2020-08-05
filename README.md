@@ -146,7 +146,7 @@ EAR=(∣∣p2−p6∣∣+∣∣p3−p5∣∣)/(2∣∣p1−p4∣∣)
 $$
 
 
-![eyeEar](http://www.imod.top/img/eyeEar.png)
+![eyeEar](/img/eyeEar.png)
 
 > For details, please refer to Soukupová and Čech's 2016 paper Real-Time Eye Blink Detection using Facial Landmarks
 
@@ -165,10 +165,10 @@ Unlike LBF, ERT directly stores the updated value ΔS of shape in the leaf node 
 "Eye Aspect Ratio" (EAR): We can apply facial landmark detection to locate important areas of the face, including eyes, eyebrows, nose, ears and mouth.
 
 1. Where p1...p6 are the 2D facial landmark positions; 2. The numerator of the equation is to calculate the distance between vertical eye signs, and the denominator is to calculate the distance between horizontal eye signs, because there is only one set of horizontal points, but there are two sets Vertical point, so weighted denominator
-![EAR](http://www.imod.top/img/EAR.png)
+![EAR](/img/EAR.png)
 
 > When the human eyes are closed, the EAR decreases sharply. We use this to detect the state of human eyes closed.
-![EARTEST](http://www.imod.top/img/EARTEST.png)
+![EARTEST](/img/EARTEST.png)
 
 # Distortion correction
 
