@@ -47,7 +47,7 @@ Use ROS (Robot Operating System) to integrate all functional modules, based on t
 [Official website](https://www.ros.org)
 
 # Overall flow chart of track line & condition recognition
-![http://www.imod.top/img/detect.png](http://www.imod.top/img/detect.png)
+![detect](/img/detect.png)
 
 The main processing for each frame of input image is as follows:
 
