@@ -68,7 +68,7 @@ The main processing for each frame of input image is as follows:
 
 # The overall process of driver behavior and state detection
 
-![http://www.imod.top/img/%E9%A9%BE%E9%A9%B6%E5%91%98%E8%A1%8C%E4%B8%BA%E5%8F%8A%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B.png](http://www.imod.top/img/%E9%A9%BE%E9%A9%B6%E5%91%98%E8%A1%8C%E4%B8%BA%E5%8F%8A%E7%8A%B6%E6%80%81%E6%A3%80%E6%B5%8B.png)
+![驾驶员行为及状态检测](/img/驾驶员行为及状态检测.png)
 
 The key operations are as follows：
 
