@@ -104,7 +104,7 @@ Therefore, we have the following judgment basis:
 
 > Note: thr_vp is an adjustment parameter, debug according to actual situation
 
-![test](http://www.imod.top/img/测试.png)
+![test]/img/test.png)
 
 # Vehicle condition recognition
 
