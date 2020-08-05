@@ -130,7 +130,7 @@ The YOLO algorithm is used for identification here, and its advantages are as fo
 
 > Note: Due to the limited computing power of the notebook, the yolo model trained on the open source coco data set is used here to support 80 classifications and identifications. Refer to the configuration file for specific classifications.
 
-![preview](https://pic3.zhimg.com/v2-ee4db90336d60d251d7254f9918c3a48_r.jpg)
+![preview](/img/yolonet.jpg)
 
 # Judgment basis for state characteristics
 
