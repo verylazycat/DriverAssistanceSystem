@@ -84,7 +84,7 @@ The key operations are as follows：
 
 # Direction judgment logic
 
-![Direction judgment](http://www.imod.top/img/方向判断.png)
+![Direction judgment](/img/方向判断.png)
 
 After obtaining the road line, we have obtained two equations:
 
