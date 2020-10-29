@@ -219,7 +219,8 @@ Under the condition of lidar, apply slam technology to build a space map
 
 # Installation configuration
 
--ROS
+- ROS
+
 
 > Currently not used, do not install
 - opencv

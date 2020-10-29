@@ -1,7 +1,7 @@
 -- The C compiler identification is GNU 7.5.0
 -- The CXX compiler identification is GNU 7.5.0
--- Check for working C compiler: /usr/bin/gcc-7
--- Check for working C compiler: /usr/bin/gcc-7 -- works
+-- Check for working C compiler: /usr/bin/cc
+-- Check for working C compiler: /usr/bin/cc -- works
 -- Detecting C compiler ABI info
 -- Detecting C compiler ABI info - done
 -- Detecting C compile features
@@ -17,13 +17,13 @@
 -- ------------------------------------------------------
 -- OpenCV library status:
 -- version: 3.4.5
--- libraries: opencv_calib3d;opencv_core;opencv_dnn;opencv_features2d;opencv_flann;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_shape;opencv_stitching;opencv_superres;opencv_video;opencv_videoio;opencv_videostab;opencv_viz
+-- libraries: opencv_calib3d;opencv_core;opencv_dnn;opencv_features2d;opencv_flann;opencv_highgui;opencv_imgcodecs;opencv_imgproc;opencv_ml;opencv_objdetect;opencv_photo;opencv_shape;opencv_stitching;opencv_superres;opencv_video;opencv_videoio;opencv_videostab
 -- include path: /usr/local/include;/usr/local/include/opencv
 -- ------------------------------------------------------
 -- DLIB library status:
--- version: 19.19.0
+-- version: 19.21.99
 -- libraries: dlib::dlib
--- include path: /usr/local/include;/usr/include;/usr/include
+-- include path: /usr/local/include;
 -- ------------------------------------------------------
 -- Src file: src/main.cpp
 -- Configuring done
